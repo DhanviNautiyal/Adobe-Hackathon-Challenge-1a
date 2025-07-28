@@ -1,4 +1,4 @@
-# Challenge 1a: PDF Processing Solution
+# Adobe Hackathon Challenge 1a - PDF Processing Solution
 
 ## Overview
 This solution extracts document titles and outlines from PDF files with multilingual support and image OCR capabilities.
@@ -29,8 +29,8 @@ This solution extracts document titles and outlines from PDF files with multilin
 
 #### 1. Clone the Repository
 ```bash
-git clone <repository-url>
-cd Adobe-India-Hackathon25/Challenge_1a
+git clone https://github.com/DhanviNautiyal/Adobe-Hackathon-Challenge-1a.git
+cd Adobe-Hackathon-Challenge-1a
 ```
 
 #### 2. Install Tesseract OCR (Optional)
@@ -113,4 +113,9 @@ docker run --rm -v C:\path\to\pdfs:/app/input:ro -v C:\path\to\output:/app/outpu
 - Execution time: ≤ 10 seconds for 50-page PDF
 - Model size: ≤ 200MB
 - Network: No internet access required
-- Runtime: CPU with 8 cores, 16GB RAM 
+- Runtime: CPU with 8 cores, 16GB RAM
+
+## Repository Information
+- **Repository**: https://github.com/DhanviNautiyal/Adobe-Hackathon-Challenge-1a.git
+- **Challenge**: Adobe India Hackathon 2025 - Challenge 1a
+- **Type**: PDF Processing Solution 
