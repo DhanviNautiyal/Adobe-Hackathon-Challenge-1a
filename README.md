@@ -19,17 +19,94 @@ This solution extracts document titles and outlines from PDF files with multilin
 - **Performance Optimized**: Processes 50-page PDFs in under 10 seconds
 - **Modular Design**: Uses shared utilities for code reuse
 
-## Input
+## Setup Instructions
+
+### Prerequisites
+1. **Python 3.10** (recommended) or Python 3.8+
+2. **Tesseract OCR** (optional, for image text extraction)
+
+### Installation Steps
+
+#### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd Adobe-India-Hackathon25/Challenge_1a
+```
+
+#### 2. Install Tesseract OCR (Optional)
+**Windows:**
+- Download from: https://github.com/UB-Mannheim/tesseract/wiki
+- Add to PATH: `C:\Program Files\Tesseract-OCR`
+
+**macOS:**
+```bash
+brew install tesseract
+```
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt-get install tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra tesseract-ocr-hin tesseract-ocr-jpn tesseract-ocr-ara tesseract-ocr-chi-sim tesseract-ocr-rus
+```
+
+#### 3. Create Virtual Environment
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+```
+
+#### 4. Install Python Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+#### 5. Verify Installation
+```bash
+python -c "import fitz; import pytesseract; print('Setup successful!')"
+```
+
+### Input
 - PDF files in the input directory
 - Supports any PDF format with text and images
 
-## Output
+### Output
 - JSON files with document title and outline structure
 - Each PDF generates a corresponding JSON output file
 
 ## Usage
+
+### Local Execution
 ```bash
 python process_pdfs.py
+```
+
+### Docker Execution
+```bash
+# Build the Docker image
+docker build --platform linux/amd64 -t pdf-processor .
+
+# Run with sample data
+docker run --rm -v $(pwd)/sample_dataset/pdfs:/app/input:ro -v $(pwd)/sample_dataset/outputs:/app/output pdf-processor
+
+# Run with custom input/output directories
+docker run --rm -v /path/to/your/pdfs:/app/input:ro -v /path/to/output:/app/output pdf-processor
+```
+
+### Docker Commands for Windows
+```powershell
+# Build the Docker image
+docker build --platform linux/amd64 -t pdf-processor .
+
+# Run with sample data (PowerShell)
+docker run --rm -v ${PWD}/sample_dataset/pdfs:/app/input:ro -v ${PWD}/sample_dataset/outputs:/app/output pdf-processor
+
+# Run with custom directories
+docker run --rm -v C:\path\to\pdfs:/app/input:ro -v C:\path\to\output:/app/output pdf-processor
 ```
 
 ## Performance
