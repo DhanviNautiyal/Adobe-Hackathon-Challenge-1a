@@ -1,9 +1,54 @@
-FROM --platform=linux/amd64 python:3.10
+FROM --platform=linux/amd64 python:3.10-slim
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr \
+    tesseract-ocr-eng \
+    tesseract-ocr-fra \
+    tesseract-ocr-deu \
+    tesseract-ocr-spa \
+    tesseract-ocr-ita \
+    tesseract-ocr-por \
+    tesseract-ocr-rus \
+    tesseract-ocr-ara \
+    tesseract-ocr-hin \
+    tesseract-ocr-chi-sim \
+    tesseract-ocr-jpn \
+    tesseract-ocr-kor \
+    libtesseract-dev \
+    libleptonica-dev \
+    pkg-config \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
 WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies with specific CPU optimizations
+RUN pip install --no-cache-dir -r requirements.txt && \
+    # Clean up pip cache
+    rm -rf /root/.cache/pip
 
 # Copy the processing script
 COPY process_pdfs.py .
 
-# Run the script
+# Create input and output directories
+RUN mkdir -p /app/input /app/output
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV OMP_NUM_THREADS=8
+ENV MKL_NUM_THREADS=8
+ENV NUMEXPR_NUM_THREADS=8
+ENV OPENBLAS_NUM_THREADS=8
+ENV VECLIB_MAXIMUM_THREADS=8
+ENV PYTHONPATH=/app
+
+# Run the script when the container launches
 CMD ["python", "process_pdfs.py"] 
